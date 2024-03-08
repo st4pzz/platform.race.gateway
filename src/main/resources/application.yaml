@@ -3,12 +3,20 @@ spring:
     name: store-gateway
 
   cloud:
+    discovery:
+      locator:
+        enabled: true
     gateway:
       routes:
         - id: store-auth
           uri: lb://store-auth
           predicates:
             - Path=/auth/**
+
+        - id: store-account
+          uri: lb://store-account
+          predicates:
+            - Path=/accounts/**
 
         - id: insper
           uri: https://www.insper.edu.br
@@ -22,3 +30,8 @@ eureka:
     service-url:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
 
+api:
+  endpoints:
+    open: >
+        ANY /auth/register,
+        POST /auth/login
