@@ -28,7 +28,7 @@ public class AuthenticationFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         final ServerHttpRequest request = exchange.getRequest();
-        System.out.println("AQUIIIII -> " +  (routerValidator.openApiEndpoints));
+        // System.out.println("AQUIIIII -> " +  (routerValidator.openApiEndpoints));
         // verificar se a rota eh segura
         if (!routerValidator.isSecured.test(request)) {
             return chain.filter(exchange);
@@ -54,7 +54,6 @@ public class AuthenticationFilter implements GlobalFilter {
                 if (response != null && response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                     // atualizar o cabecalho da requisicao com o usuario logado
                     updateRequestWithUser(exchange, response.getBody());
-                    exchange.getRequest().mutate().header("user", response.getBody().toString());
                     return chain.filter(exchange);
                 } else {
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token.");

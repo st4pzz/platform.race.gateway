@@ -23,6 +23,13 @@ spring:
           predicates:
             - Path=/
 
+management:
+  endpoints:
+    web:
+      base-path: /gateway/actuator
+      exposure:
+        include: [ 'prometheus' ]
+
 eureka:
   client:
     register-with-eureka: true
@@ -33,5 +40,7 @@ eureka:
 api:
   endpoints:
     open: >
-        ANY /auth/register,
-        POST /auth/login
+      POST /auth/register,
+      POST /auth/login,
+      ANY /auth/actuator/**,
+      ANY /accounts/actuator,
