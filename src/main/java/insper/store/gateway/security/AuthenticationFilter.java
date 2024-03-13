@@ -25,6 +25,7 @@ public class AuthenticationFilter implements GlobalFilter {
     @Autowired
     private WebClient.Builder webClient;
 
+    @SuppressWarnings("null")
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         final ServerHttpRequest request = exchange.getRequest();
