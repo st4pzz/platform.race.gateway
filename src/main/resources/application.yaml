@@ -17,6 +17,15 @@ spring:
           uri: lb://store-account
           predicates:
             - Path=/accounts/**
+        - id: store-jogador
+          uri: lb://store-jogador
+          predicates:
+            - Path=/jogador/**
+
+        - id: store-partida
+          uri: lb://store-partida
+          predicates:
+            - Path=/partida/**
 
         - id: insper
           uri: https://www.insper.edu.br
