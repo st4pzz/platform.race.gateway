@@ -49,7 +49,14 @@ eureka:
 api:
   endpoints:
     open: >
+      
       POST /auth/register,
       POST /auth/login,
       ANY /auth/actuator,
-      ANY /accounts/actuator
+      ANY /accounts/actuator,
+      ANY /partida/actuator,
+      ANY /jogador/actuator,
+      ANY /accounts/**,
+      ANY /partida/**,
+      ANY /jogador/**,
+      ANY /auth/**
