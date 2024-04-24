@@ -1,22 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: store-gateway
+  name: gateway-api
   labels:
-    app: store-gateway
+    app: gateway-api
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
-      app: store-gateway
+      app: gateway-api
   template:
     metadata:
       labels:
-        app: store-gateway
+        app: gateway-api
     spec:
       containers:
-        - name: store-gateway
+        - name: gateway-api
           image: humbertosandmann/gateway:latest
-          imagePullPolicy: Never
           ports:
             - containerPort: 8080

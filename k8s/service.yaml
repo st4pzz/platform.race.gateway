@@ -1,13 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: store-gateway
+  name: gateway-api
   labels:
-    run: store-gateway
+    app: gateway-api
 spec:
+  type: NodePort
   ports:
     - port: 8080
       targetPort: 8080
       protocol: TCP
   selector:
-    app: store-gateway
+    app: gateway-api
