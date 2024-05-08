@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: store-gateway
@@ -35,7 +38,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+      defaultZone: http://${DISCOVERY_HOST}:8761/eureka/
 
 api:
   endpoints:
