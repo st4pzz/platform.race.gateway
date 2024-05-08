@@ -1,21 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway-api
+  name: gateway
   labels:
-    app: gateway-api
+    app: gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gateway-api
+      app: gateway
   template:
     metadata:
       labels:
-        app: gateway-api
+        app: gateway
     spec:
       containers:
-        - name: gateway-api
+        - name: gateway
           image: humbertosandmann/gateway:latest
           ports:
             - containerPort: 8080
+
+          env:
+
+            - name: DISCOVERY_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: discovery-configmap
+                  key: DISCOVERY_HOST
