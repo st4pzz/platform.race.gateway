@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        K8S_PORT = 50157
+    }
     stages {
         stage('Build Auth') {
             steps {
@@ -14,7 +17,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    account = docker.build("humbertosandmann/gateway:${env.BUILD_ID}", "-f Dockerfile .")
+                    image = docker.build("humbertosandmann/gateway:${env.BUILD_ID}", "-f Dockerfile .")
                 }
             }
         }
@@ -22,8 +25,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credential') {
-                        account.push("${env.BUILD_ID}")
-                        account.push("latest")
+                        image.push("${env.BUILD_ID}")
+                        image.push("latest")
                     }
                 }
             }
@@ -31,8 +34,8 @@ pipeline {
         stage('Deploy on k8s') {
             steps {
                 withCredentials([ string(credentialsId: 'minikube-credential', variable: 'api_token') ]) {
-                    sh 'kubectl --token $api_token --server https://host.docker.internal:60653  --insecure-skip-tls-verify=true apply -f ./k8s/deployment.yaml '
-                    sh 'kubectl --token $api_token --server https://host.docker.internal:60653  --insecure-skip-tls-verify=true apply -f ./k8s/service.yaml '
+                    sh "kubectl --token $api_token --server https://host.docker.internal:${env.K8S_PORT}  --insecure-skip-tls-verify=true apply -f ./k8s/deployment.yaml"
+                    sh "kubectl --token $api_token --server https://host.docker.internal:${env.K8S_PORT}  --insecure-skip-tls-verify=true apply -f ./k8s/service.yaml"
                 }
             }
         }
