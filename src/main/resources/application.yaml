@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: store-gateway
+    name: gateway
 
   cloud:
     discovery:
@@ -12,12 +12,12 @@ spring:
     gateway:
       routes:
         - id: store-auth
-          uri: lb://store-auth
+          uri: lb://auth
           predicates:
             - Path=/auth/**
 
         - id: store-account
-          uri: lb://store-account
+          uri: lb://account
           predicates:
             - Path=/accounts/**
 
