@@ -17,7 +17,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    image = docker.build("humbertosandmann/gateway:${env.BUILD_ID}", "-f Dockerfile .")
+                    image = docker.build("humbertosandmann/gateway:${env.BUILD_ID}", "--platform linux/amd64,linux/arm64 -t madenmustafa/postmage -f Dockerfile .")
                 }
             }
         }
