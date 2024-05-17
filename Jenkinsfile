@@ -18,7 +18,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    image = docker.build("humbertosandmann/gateway:${env.BUILD_ID}", "--platform linux/amd64,linux/arm64 -f Dockerfile .")
+                    image = docker.build("humbertosandmann/gateway:${env.BUILD_ID}", "--platform linux/amd64 -f Dockerfile .")
                 }
             }
         }
