@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         K8S_LOCAL_PORT = 51971
-        NAME = 'humbertosandmann/gateway'
         SERVICE = 'gateway'
+        NAME = 'humbertosandmann/' + env.SERVICE
     }
     stages {
         stage('Build Auth') {
