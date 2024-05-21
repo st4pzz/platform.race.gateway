@@ -3,6 +3,7 @@ pipeline {
     environment {
         K8S_LOCAL_PORT = 51971
         NAME = 'humbertosandmann/gateway'
+        SERVICE = 'gateway'
     }
     stages {
         stage('Build Auth') {
@@ -19,9 +20,9 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
                     sh "docker login -u $USERNAME -p $TOKEN"
-                    sh "docker buildx create --use --platform=linux/arm64,linux/amd64 --node multi-platform-builder-${env.NAME}"
+                    sh "docker buildx create --use --platform=linux/arm64,linux/amd64 --node multi-platform-builder-${env.SERVICE}"
                     sh "docker buildx build --platform=linux/arm64,linux/amd64 --push --tag ${env.NAME}:latest --tag ${env.NAME}:${env.BUILD_ID} -f Dockerfile ."
-                    sh "docker buildx rm --force multi-platform-builder-${env.NAME}"
+                    sh "docker buildx rm --force multi-platform-builder-${env.SERVICE}"
                 }
             }
         }
