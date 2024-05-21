@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Deploy on Local K8s') {
             when { 
-                environment name: 'LOCAL', value: true
+                environment name: 'LOCAL', value: 'true'
             }
             steps {
                 withCredentials([ string(credentialsId: 'minikube-credential', variable: 'api_token') ]) {
@@ -38,7 +38,7 @@ pipeline {
         }
         stage('Deploy on AWS K8s') {
             when { 
-                environment name: 'AWS', value: true
+                environment name: 'AWS', value: 'true'
             }
             steps {
                 sh "kubectl apply -f ./k8s/deployment.yaml"
