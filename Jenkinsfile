@@ -3,7 +3,7 @@ pipeline {
     environment {
         K8S_LOCAL_PORT = 51971
         SERVICE = 'gateway'
-        NAME = 'humbertosandmann/' + env.SERVICE
+        NAME = "humbertosandmann/${env.SERVICE}"
     }
     stages {
         stage('Build Auth') {
