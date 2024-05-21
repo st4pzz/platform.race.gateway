@@ -6,7 +6,7 @@ pipeline {
         NAME = "humbertosandmann/${env.SERVICE}"
     }
     stages {
-        stage('Build Auth') {
+        stage('Dependecies') {
             steps {
                 build job: 'store.auth', wait: true
             }
