@@ -4,7 +4,6 @@ server:
 spring:
   application:
     name: gateway
-
   cloud:
     discovery:
       locator:
@@ -15,7 +14,6 @@ spring:
           uri: lb://auth
           predicates:
             - Path=/auth/**
-
         - id: store-account
           uri: lb://account
           predicates:
@@ -28,12 +26,16 @@ spring:
           uri: lb://store-jogador
           predicates:
             - Path=/jogador/**
-
-
         - id: insper
           uri: https://www.insper.edu.br
           predicates:
             - Path=/
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: insperCircuitBreaker
+                fallbackUri: forward:/fallback
+
 
 management:
   endpoints:
@@ -49,10 +51,19 @@ eureka:
     service-url:
       defaultZone: http://${DISCOVERY_HOST}:8761/eureka/
 
+resilience4j.circuitbreaker:
+  instances:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 100
+      permittedNumberOfCallsInHalfOpenState: 10
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 10000
+      failureRateThreshold: 50
+
 api:
   endpoints:
     open: >
-      
       POST /auth/register,
       POST /auth/login,
       ANY /auth/actuator,
