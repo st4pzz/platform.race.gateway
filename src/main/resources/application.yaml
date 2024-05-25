@@ -12,9 +12,12 @@ spring:
     gateway:
       routes:
         - id: store-auth
-          uri: lb://auth
+          uri: store-auth
           predicates:
             - Path=/auth/**
+
+            spring:
+
 
         - id: store-account
           uri: lb://account
@@ -47,7 +50,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://${DISCOVERY_HOST}:8761/eureka/
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
 
 api:
   endpoints:
