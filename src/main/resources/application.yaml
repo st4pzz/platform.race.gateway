@@ -12,15 +12,11 @@ spring:
     gateway:
       routes:
         - id: store-auth
-          uri: store-auth
+          uri: lb://store-auth
           predicates:
             - Path=/auth/**
-
-            spring:
-
-
         - id: store-account
-          uri: lb://account
+          uri: lb://store-account
           predicates:
             - Path=/accounts/**
         - id: store-partida
@@ -31,7 +27,6 @@ spring:
           uri: lb://store-jogador
           predicates:
             - Path=/jogador/**
-
 
         - id: insper
           uri: https://www.insper.edu.br
@@ -55,7 +50,6 @@ eureka:
 api:
   endpoints:
     open: >
-      
       POST /auth/register,
       POST /auth/login,
       ANY /auth/actuator,
