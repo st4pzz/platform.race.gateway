@@ -18,20 +18,23 @@ A arquitetura do projeto utiliza uma abordagem de microserviços, onde cada comp
 ## Estrutura do Projeto
 
 ```
-platform.race.gateway/
+gateway/
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── example/
-│   │   │           └── gateway/
-│   │   │               ├── controller/
-│   │   │               ├── model/
-│   │   │               ├── repository/
-│   │   │               └── service/
+│   │      └── insper/
+│   │          └── store/
+│   │              └── gateway/
+│   │                  ├── GatewayApplication/
+│   │                  ├── GatewayConfiguration/
+│   │                  ├── GatewayResource/
+│   │                  └── security
+│   │                      ├── AuthenticationFilter/
+│   │                      └── RouterValidator/
 │   └── resources/
+├── .gitignore
+├── Dockerfile
 ├── Jenkinsfile
-├── docker-compose.yml
 ├── README.md
 └── pom.xml
 ```
